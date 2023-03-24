@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>File Upload</title>
+</head>
+<body>
+  <h1>File Upload</h1>
+  
+  <!-- File Upload Form -->
+  <form enctype="multipart/form-data" method="POST" action="/upload">
+    <input type="file" name="file">
+    <br><br>
+    <input type="submit" value="Upload">
+  </form>
+  
+  <h2>File List</h2>
+  <!-- File List -->
+  <button id="fetchButton">Fetch Files</button>
+
+  <!-- File List -->
+  <ul id="fileList"></ul>
+
+  <!-- JavaScript to fetch the list of files -->
+  <script>
+    // Add a click event listener to the fetch button
+    const fetchButton = document.getElementById('fetchButton');
+    fetchButton.addEventListener('click', () => {
+      // Fetch the list of files from the server
+      fetch('/list')
+        .then(response => response.json())
+        .then(files => {
+          // Create a list element for each file and append to the file list
+          const fileList = document.getElementById('fileList');
+          files.forEach(file => {
+            const li = document.createElement('li');
+            li.innerText = file;
+            fileList.appendChild(li);
+          });
+        });
+    });
+  </script>
+</body>
+</html>
